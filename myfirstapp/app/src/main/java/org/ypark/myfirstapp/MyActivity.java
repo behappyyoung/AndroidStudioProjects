@@ -1,8 +1,11 @@
 package org.ypark.myfirstapp;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
@@ -17,14 +20,28 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my, menu);
-        return true;
+        //getMenuInflater().inflate(R.menu.menu_my, menu);
+        //return true;
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_my, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void openSearch(){
+        startActivity(new Intent(SearchManager.INTENT_ACTION_GLOBAL_SEARCH));
+    }
+
+    private void openSettings() {
+        startActivity(new Intent(Settings.ACTION_SETTINGS));
     }
 
     @Override
@@ -36,6 +53,10 @@ public class MyActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSettings();
+            return true;
+        }else if(id == R.id.action_search){
+            openSearch();
             return true;
         }
 
